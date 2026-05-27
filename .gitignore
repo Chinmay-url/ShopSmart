@@ -1,0 +1,68 @@
+# Dependencies
+node_modules/
+jspm_packages/
+
+# Build outputs
+build/
+dist/
+out/
+.next/
+.cache/
+
+# Debug / error logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+logs/
+*.log
+
+# Environment variables -- NEVER commit real secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+*.env
+
+# Keep the template committed so judges know what to configure
+!.env.example
+
+# Testing
+coverage/
+.nyc_output/
+
+# Spreadsheet datasets -- too large / regenerated at runtime.
+# Directories are kept via .gitkeep so the folder structure still exists on clone.
+*.xlsx
+*.xls
+*.xlsm
+*.xlsb
+*.ods
+*.csv
+
+# Editor / IDE
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.project
+.classpath
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary scratch files
+tmp_*.js
+diff_names.txt
+*_status.txt
+*_status_utf8.txt
+*.log.orig
+*.bak
