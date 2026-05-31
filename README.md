@@ -81,6 +81,4 @@ server/              Express backend
   data/price-history/ XLSX data files
 ```
 
-## License
 
-ISC
