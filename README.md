@@ -41,7 +41,7 @@ Sentiment analysis runs **entirely on-device** using Transformers.js — no exte
 
 1. Clone the repo:
    ```bash
-   git clone https://github.com/your-username/ShopSmart.git
+   git clone https://github.com/Chinmay-url/ShopSmart.git
    cd ShopSmart
    ```
 
