@@ -80,5 +80,6 @@ server/              Express backend
   utils/             Helpers (sentiment, email scheduler, price history)
   data/price-history/ XLSX data files
 ```
-
+License
+MIT
 
