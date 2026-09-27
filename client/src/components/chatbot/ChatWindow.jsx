@@ -38,7 +38,7 @@ const RupeesChatbot = ({ context }) => {
         },
       ]);
     }
-  }, [isOpen]);
+  }, [isOpen, messages.length]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });

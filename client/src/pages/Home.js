@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, useInView, animate } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 // ─── Floating Product Card ────────────────────────────────────────────────────
 const FloatingCard = ({ delay, x, y, emoji, label, price, badge }) => (
@@ -474,10 +474,10 @@ const Home = () => {
               </p>
               <div className="flex gap-3">
                 {['twitter', 'instagram', 'linkedin', 'telegram'].map(sn => (
-                  <a key={sn} href="#"
-                    className="w-9 h-9 rounded-xl bg-slate-800 flex items-center justify-center hover:bg-indigo-600 transition-colors">
+                  <button key={sn} type="button" aria-label={sn}
+                    className="w-9 h-9 rounded-xl bg-slate-800 flex items-center justify-center hover:bg-indigo-600 transition-colors cursor-pointer">
                     <span className="material-icons text-sm">link</span>
-                  </a>
+                  </button>
                 ))}
               </div>
             </div>
@@ -490,7 +490,7 @@ const Home = () => {
                 <h4 className="text-white font-bold mb-5 text-sm uppercase tracking-widest">{col.head}</h4>
                 <ul className="space-y-3 text-sm">
                   {col.links.map(l => (
-                    <li key={l}><a href="#" className="hover:text-white transition-colors">{l}</a></li>
+                    <li key={l}><button type="button" className="hover:text-white transition-colors cursor-pointer text-left">{l}</button></li>
                   ))}
                 </ul>
               </div>
@@ -516,9 +516,9 @@ const Home = () => {
           <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
             <span>© 2024 ShopSmart Inc. Prices fetched in real-time. Trademarks belong to respective owners.</span>
             <div className="flex gap-6">
-              <a href="#" className="hover:text-white transition-colors">Privacy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms</a>
-              <a href="#" className="hover:text-white transition-colors">Cookies</a>
+              <button type="button" className="hover:text-white transition-colors cursor-pointer">Privacy</button>
+              <button type="button" className="hover:text-white transition-colors cursor-pointer">Terms</button>
+              <button type="button" className="hover:text-white transition-colors cursor-pointer">Cookies</button>
             </div>
           </div>
         </div>

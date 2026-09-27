@@ -978,7 +978,7 @@ const ProductDetails = () => {
                                   <img
                                     key={imgIdx}
                                     src={img}
-                                    alt={`Review image ${imgIdx + 1}`}
+                                    alt={`Review ${imgIdx + 1}`}
                                     className="w-16 h-16 object-cover rounded-lg border border-gray-200 flex-shrink-0"
                                     onError={(e) => { e.target.style.display = 'none'; }}
                                   />
@@ -1034,7 +1034,7 @@ const ProductDetails = () => {
                           <img
                             key={idx}
                             src={img}
-                            alt={`Customer photo ${idx + 1}`}
+                            alt={`Customer ${idx + 1}`}
                             className="w-20 h-20 object-cover rounded-lg border border-gray-200 flex-shrink-0 hover:scale-105 transition-transform cursor-pointer"
                             onError={(e) => { e.target.style.display = 'none'; }}
                           />

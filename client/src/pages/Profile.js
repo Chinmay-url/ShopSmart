@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { Trash2, ExternalLink, ArrowLeft } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 
 // ── Shared accent token ────────────────────────────────────────────────────
 const ACCENT = '#6366f1';
-const ACCENT_DARK = '#4f46e5';
 const GRAD = 'linear-gradient(135deg, #6366f1, #7c3aed)';
 
 const gradientText = {
@@ -26,6 +25,12 @@ const cardHover = {
   rest:  { scale: 1,    boxShadow: '0 1px 4px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.06)' },
   hover: { scale: 1.02, boxShadow: '0 8px 32px rgba(99,102,241,0.18), 0 0 0 1.5px rgba(99,102,241,0.4)' },
 };
+
+const productCardVariants = (index) => ({
+  rest:   { ...cardHover.rest, opacity: 0, y: 20 },
+  animate: { ...cardHover.rest, y: 0, transition: { duration: 0.45, delay: 0.05 * index, ease: [0.22, 1, 0.36, 1] } },
+  hover:  { ...cardHover.hover },
+});
 
 // ── Subtle dot grid background ─────────────────────────────────────────────
 const DotGrid = () => (
@@ -60,11 +65,10 @@ const StatPill = ({ label, value }) => (
 // ── Product card ───────────────────────────────────────────────────────────
 const ProductCard = ({ product, onRemove, index }) => (
   <motion.div
-    variants={fadeUp(0.05 * index)}
-    initial="initial"
+    variants={productCardVariants(index)}
+    initial="rest"
     animate="animate"
     whileHover="hover"
-    variants={cardHover}
     transition={{ type: 'spring', stiffness: 340, damping: 28 }}
     style={{
       background: '#ffffff',
@@ -177,11 +181,7 @@ const Profile = () => {
   const { user, token } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchSavedProducts();
-  }, []);
-
-  const fetchSavedProducts = async () => {
+  const fetchSavedProducts = useCallback(async () => {
     try {
       setLoading(true);
       const response = await fetch('/products/saved', {
@@ -199,7 +199,11 @@ const Profile = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
+
+  useEffect(() => {
+    fetchSavedProducts();
+  }, [fetchSavedProducts]);
 
   const handleRemoveProduct = async (productId) => {
     try {

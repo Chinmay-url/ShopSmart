@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
@@ -16,35 +16,7 @@ const PriceHistory = () => {
 
     const productName = searchParams.get('product');
 
-    useEffect(() => {
-        fetchCategories();
-        fetchAllProducts();
-    }, []);
-
-    useEffect(() => {
-        if (productName) {
-            setSelectedProduct(productName);
-            fetchPriceHistory(productName);
-        }
-    }, [productName]);
-
-    useEffect(() => {
-        if (selectedCategory !== 'all') {
-            fetchProductsByCategory(selectedCategory);
-        } else {
-            fetchAllProducts();
-        }
-    }, [selectedCategory]);
-
-    useEffect(() => {
-        if (selectedProduct) {
-            fetchProductReviews(selectedProduct);
-        } else {
-            setProductReviews(null);
-        }
-    }, [selectedProduct]);
-
-    const fetchCategories = async () => {
+    const fetchCategories = useCallback(async () => {
         try {
             const response = await fetch('http://localhost:5000/price-history/categories/list');
             if (response.ok) {
@@ -54,22 +26,22 @@ const PriceHistory = () => {
         } catch (err) {
             console.error('Error fetching categories:', err);
         }
-    };
+    }, []);
 
-    const fetchAllProducts = async () => {
+    const fetchAllProducts = useCallback(async () => {
         try {
             const response = await fetch('http://localhost:5000/price-history');
             if (response.ok) {
                 const data = await response.json();
                 setAllProducts(data.products || []);
-                setCategories(data.categories || categories);
+                setCategories((prev) => data.categories || prev);
             }
         } catch (err) {
             console.error('Error fetching products:', err);
         }
-    };
+    }, []);
 
-    const fetchProductsByCategory = async (category) => {
+    const fetchProductsByCategory = useCallback(async (category) => {
         try {
             const response = await fetch(`http://localhost:5000/price-history?category=${encodeURIComponent(category)}`);
             if (response.ok) {
@@ -79,9 +51,9 @@ const PriceHistory = () => {
         } catch (err) {
             console.error('Error fetching products by category:', err);
         }
-    };
+    }, []);
 
-    const fetchPriceHistory = async (product) => {
+    const fetchPriceHistory = useCallback(async (product) => {
         try {
             setLoading(true);
             setError(null);
@@ -100,7 +72,7 @@ const PriceHistory = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
 
     const handleProductSelect = (e) => {
         const product = e.target.value;
@@ -110,7 +82,7 @@ const PriceHistory = () => {
         }
     };
 
-    const fetchProductReviews = async (query) => {
+    const fetchProductReviews = useCallback(async (query) => {
         try {
             setReviewsLoading(true);
             const response = await fetch(`http://localhost:5000/reviews?q=${encodeURIComponent(query)}`);
@@ -123,7 +95,35 @@ const PriceHistory = () => {
         } finally {
             setReviewsLoading(false);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        fetchCategories();
+        fetchAllProducts();
+    }, [fetchCategories, fetchAllProducts]);
+
+    useEffect(() => {
+        if (productName) {
+            setSelectedProduct(productName);
+            fetchPriceHistory(productName);
+        }
+    }, [productName, fetchPriceHistory]);
+
+    useEffect(() => {
+        if (selectedCategory !== 'all') {
+            fetchProductsByCategory(selectedCategory);
+        } else {
+            fetchAllProducts();
+        }
+    }, [selectedCategory, fetchAllProducts, fetchProductsByCategory]);
+
+    useEffect(() => {
+        if (selectedProduct) {
+            fetchProductReviews(selectedProduct);
+        } else {
+            setProductReviews(null);
+        }
+    }, [selectedProduct, fetchProductReviews]);
 
     // Format data for chart
     const chartData = historyData?.data?.map(item => ({
