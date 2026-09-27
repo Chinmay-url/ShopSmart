@@ -455,33 +455,7 @@ Generate a strong JWT secret with:
 node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"
 ```
 
----
 
-# API Overview
-
-| Method   | Endpoint                      | Purpose                        |
-| -------- | ----------------------------- | ------------------------------ |
-| `GET`    | `/search?query=`              | SerpApi Google Shopping search |
-| `GET`    | `/reviews?product_id=`        | Product reviews and analysis   |
-| `GET`    | `/price-history`              | Price-history data             |
-| `GET`    | `/price-history/:productName` | Product-specific price history |
-| `GET`    | `/price-history/stores`       | Store-specific price history   |
-| `GET`    | `/products/:productId`        | Product details                |
-| `POST`   | `/products/save`              | Save a product                 |
-| `GET`    | `/products/saved`             | Retrieve saved products        |
-| `POST`   | `/alerts`                     | Create a price alert           |
-| `GET`    | `/alerts`                     | Retrieve price alerts          |
-| `PATCH`  | `/alerts/:id/toggle`          | Enable/disable an alert        |
-| `DELETE` | `/alerts/:id`                 | Delete an alert                |
-| `POST`   | `/alerts/:id/check-now`       | Immediately check a price      |
-| `POST`   | `/chat`                       | Rupees AI shopping assistant   |
-| `POST`   | `/auth/send-otp`              | Send authentication OTP        |
-| `POST`   | `/auth/verify-otp`            | Verify OTP                     |
-| `POST`   | `/auth/signup`                | Register user                  |
-| `POST`   | `/auth/login`                 | Login                          |
-| `GET`    | `/auth/me`                    | Retrieve current user          |
-
----
 
 # AI & Development Tools
 
